@@ -1,5 +1,5 @@
 
-https://zapnito.slack.com/files/matt/F0JH5QSAD/jelly_original.png
+<img style="float: right;" src="https://github.com/zapnito/jellyfish-challenge/blob/master/jelly.png" align="right">
 
 # jellyfish-challenge
 
