@@ -1,3 +1,6 @@
+
+https://zapnito.slack.com/files/matt/F0JH5QSAD/jelly_original.png
+
 # jellyfish-challenge
 
 The Jellyfish tank can be modelled by a rectangular grid around which Jellyfish are able to move according to instructions provided from the Tank IR Remote Control. You are to write a program that determines each sequence of Jellyfish positions and reports the final position of the Jellyfish. A Jellyfish position consists of a grid coordinate (a pair of integers: x-coordinate followed by y-coordinate) and an orientation (N, S, E, W for north, south, east, and west). 
