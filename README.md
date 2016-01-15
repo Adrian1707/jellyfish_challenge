@@ -24,13 +24,16 @@ For each jellyfish position/instruction in the input, the output should indicate
 ##Sample
 
 *Input*
+````
 53
 11E RFRFRFRF
 32N FRRFLLFFRRFLL
 03W LLFFFLFLFL
-
+```
 
 *Output*
+```
 11E
 33NLOST
 23S
+```
