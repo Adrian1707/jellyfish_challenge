@@ -4,7 +4,6 @@ class JellyFish
 
   def initialize(size=1)
     @size = size
-    @tank_position = []
   end
 
   def position(x,y)
