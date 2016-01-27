@@ -23,16 +23,21 @@ describe TankRemote do
   end
 
   describe "#set_coordinate" do
-    it 'should place the fish on specific coordinates 2,4,North' do
-      remote.set_coords(jellyfish,2,4)
+    it 'should place the fish on specific coordinates 2,4' do
+      remote.set_coords(fish_tank,jellyfish,2,4)
       expect(jellyfish.tank_position).to eq([2,4])
+    end
+
+    it 'should raise error is coordinate is not in the tank' do
+      small_tank = Tank.new(5)
+      expect{remote.set_coords(small_tank,jellyfish,10,10)}.to raise_error "The tank is not that big. Choose a smaller coordinate"
     end
   end
 
   describe "#instruct_to_move" do
     it 'should move the jellyfish 1 co-ordinate across' do
       remote.place(jellyfish,fish_tank)
-      remote.set_coords(jellyfish,2,2)
+      remote.set_coords(fish_tank,jellyfish,2,2)
       remote.instruct_to_move(fish_tank,jellyfish,1,1)
       expect(jellyfish.tank_position).to eq([3,3])
     end
