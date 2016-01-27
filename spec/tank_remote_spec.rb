@@ -1,10 +1,11 @@
 require 'tank_remote'
+require 'jellyfish'
 
 describe TankRemote do
 
   let(:remote) {described_class.new(fish_tank)}
   let(:fish_tank) {double(:tank_object, fish: [])}
-  let(:jellyfish) {double(:jellyfish_object)}
+  let(:jellyfish) {JellyFish.new}
 
   describe "initialize/new" do
     it 'should initialize with a new tank object' do
@@ -21,11 +22,20 @@ describe TankRemote do
 
   end
 
-  # describe "#set_coordinate" do
-  #   it 'should place the fish on specific coordinates 2,4,North' do
-  #     remote.set_coords(jellyfish,fish_tank,2,4,"North")
-  #     expect(jellyfish.position).to eq([2,4],"North")
-  #   end
-  # end
+  describe "#set_coordinate" do
+    it 'should place the fish on specific coordinates 2,4,North' do
+      remote.set_coords(jellyfish,2,4)
+      expect(jellyfish.tank_position).to eq([2,4])
+    end
+  end
+
+  describe "#instruct_to_move" do
+    it 'should move the jellyfish 1 co-ordinate across' do
+      remote.place(jellyfish,fish_tank)
+      remote.set_coords(jellyfish,2,2)
+      remote.instruct_to_move(jellyfish,1,1)
+      expect(jellyfish.tank_position).to eq([3,3])
+    end
+  end
 
 end

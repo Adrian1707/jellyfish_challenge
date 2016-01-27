@@ -11,5 +11,10 @@ class JellyFish
     @tank_position = [x,y]
   end
 
+  def move(x,y)
+    @tank_position[0]+=x
+    @tank_position[1]+=y
+  end
+
 
 end
