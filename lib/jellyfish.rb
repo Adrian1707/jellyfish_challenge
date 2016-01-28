@@ -2,7 +2,6 @@ require_relative 'tank'
 class JellyFish
 
   attr_reader :size, :tank_position, :facing, :x, :y, :lost, :journey_history
-
   ORIENTATION = {"N"=>"E","E"=>"S","S"=>"W","W"=>"N"}
 
   def initialize(size=1)
@@ -25,16 +24,16 @@ class JellyFish
         self.turn(l)
       end
       if l == "F" && @facing == "N"
-        @y = @y+=1
+        @y = @y+=1 unless tank.restricted_zones.include? [@x,@y+1]
         record_journey_history
       elsif l == "F" && @facing == "S"
-        @y = @y-=1
+        @y = @y-=1 unless tank.restricted_zones.include? [@x,@y-1]
         record_journey_history
       elsif l == "F" && @facing == "E"
-        @x = @x+=1
+        @x = @x+=1 unless tank.restricted_zones.include? [@x+1,@y]
         record_journey_history
       elsif l == "F" && @facing == "W"
-        @x = @x-=1
+        @x = @x-=1 unless tank.restricted_zones.include? [@x-1,@y]
         record_journey_history
       end
       set_to_lost_if_outside_tank(tank)
@@ -59,10 +58,8 @@ class JellyFish
     end
   end
 
-  def no_go_zone
-    if @lost == true
-      @restricted_zones = @journey_history[-1]
-    end
+  def no_go_zone(tank)
+      tank.restricted_zones << @journey_history[-1] unless tank.restricted_zones.include? @journey_history[-1]
   end
 
   private
@@ -74,6 +71,7 @@ class JellyFish
   def set_to_lost_if_outside_tank(tank)
     if outside_tank?(tank) == false
       @lost = true
+      no_go_zone(tank)
     end
   end
 
@@ -102,10 +100,23 @@ class JellyFish
   end
 
 end
-
-# fish = JellyFish.new
-# tank = Tank.new
+#
+fish = JellyFish.new
+fish2 = JellyFish.new
+tank = Tank.new
+fish.position(1,1,"N")
+fish.move(tank,"FFF")
+fish.no_go_zone(tank)
+# print tank.restricted_zones
+fish2.position(1,1,"N")
+fish2.move(tank,"FFFFFF")
+print fish.output
+print fish2.output
+# print tank.restricted_zones
 # fish.position(1,1,"N")
 # fish.move(tank,"FFF")
-# print fish.journey_history
+# fish2.position(1,1,"N")
+# fish2.move(tank,"FFF")
+# # print fish.journey_history
 # print fish.output
+# print fish2.output

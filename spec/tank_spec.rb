@@ -3,6 +3,7 @@ require 'tank'
 describe Tank do
 
   let(:tank) {described_class.new}
+  let(:jellyfish) {JellyFish.new}
 
   describe '#initialize/new' do
     it 'when created has a default size of 5x3' do
@@ -21,9 +22,16 @@ describe Tank do
     it 'has no fish inside on creation' do
       expect(tank.fish).to eq([])
     end
+  end
 
-
-
+  describe "#restricted_zones" do
+    it 'should keep track of restricted zones' do
+      jellyfish.position(1,1,"N")
+      jellyfish.move(tank,"FFF")
+      jellyfish.no_go_zone(tank)
+      expect(jellyfish.lost).to be true
+      expect(tank.restricted_zones).to eq([[1,4]])
+    end
   end
 
 end

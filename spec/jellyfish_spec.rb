@@ -48,7 +48,16 @@ describe JellyFish do
       jellyfish.position(1,1,"N")
       jellyfish.move(fish_tank,"FFF")
       expect(jellyfish.lost).to be true
-      expect(jellyfish.no_go_zone).to eq([1,4])
+      expect(fish_tank.restricted_zones).to eq([[1,4]])
+    end
+
+    it 'should not allow the jellyfish to move if the target position is in the no go zones' do
+      jellyfish2 = JellyFish.new
+      jellyfish.position(1,1,"N")
+      jellyfish.move(fish_tank,"FFF")
+      jellyfish2.position(1,1,"N")
+      jellyfish2.move(fish_tank,"FFF")
+      expect(jellyfish2.output).to eq("13N")
     end
   end
 

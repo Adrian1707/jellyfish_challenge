@@ -1,14 +1,16 @@
 class Tank
 
-  attr_reader :size, :tank_points, :fish, :height, :width
+  attr_reader :size, :tank_points, :fish, :height, :width, :restricted_zones
 
   def initialize(height=3, width=5)
     @height = height + 1
     @width = width + 1
     @tank_points =[]
     @fish = []
+    @restricted_zones = []
     create_tank
   end
+
 
 
   private
@@ -24,6 +26,5 @@ class Tank
 
 end
 
-tank = Tank.new
-
+# tank = Tank.new
 # print tank.tank_points
