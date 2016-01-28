@@ -1,12 +1,13 @@
 class JellyFish
 
-  attr_reader :size, :tank_position, :facing, :x, :y
+  attr_reader :size, :tank_position, :facing, :x, :y, :lost
 
   ORIENTATION = {"N"=>"E","E"=>"S","S"=>"W","W"=>"N"}
 
   def initialize(size=1)
     @size = size
     @orientation = ORIENTATION
+    @lost = false
   end
 
   def position(x,y,direction)
@@ -16,7 +17,7 @@ class JellyFish
     @facing = direction
   end
 
-  def move(instructions)
+  def move(tank,instructions)
     instructions.split("").each do |l|
       if l == "R" || l == "L"
         self.turn(l)
@@ -30,6 +31,7 @@ class JellyFish
       elsif l == "F" && @facing == "W"
         @x = @x-=1
       end
+      set_to_lost_if_outside_tank(tank)
     end
     @tank_position = [@x,@y]
     return output
@@ -47,7 +49,18 @@ class JellyFish
     @tank_position.join('') + @facing
   end
 
+
   private
+
+  def outside_tank?(tank)
+    tank.tank_points.include? [@x,@y]
+  end
+
+  def set_to_lost_if_outside_tank(tank)
+    if outside_tank?(tank) == false
+      @lost = true
+    end
+  end
 
   def turn_jellyfish_clockwise
     fetch_keys_from_orientation
@@ -71,5 +84,5 @@ class JellyFish
 end
 
 # fish = JellyFish.new
-# fish.position(1,1,"E")
-# print fish.move("RFRFRFRF")
+# fish.position(3,2,"N")
+# print fish.move("FRRFLLFFRRFLL")
