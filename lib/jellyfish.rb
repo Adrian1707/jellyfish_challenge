@@ -46,14 +46,14 @@ class JellyFish
     end
   end
 
-  def record_journey_history
-    @journey_history << [@x,@y]
-  end
-
   private
 
   def inside_tank?(tank)
     tank.tank_points.include? [@x,@y]
+  end
+
+  def record_journey_history
+    @journey_history << [@x,@y]
   end
 
   def take_direction_and_send_to_turn_method(remote)
@@ -94,8 +94,8 @@ remote = TankRemote.new(tank)
 reporter = JellyFishReporter.new
 mover = JellyFishMover.new
 remote.place(fish,tank)
-remote.set_coords(fish,1,2,"N")
-remote.instruct_to_move(remote,"FLF",fish,mover)
+remote.set_coords(fish,1,1,"N")
+remote.instruct_to_move(remote,"FF",fish,mover)
 print fish.output(reporter)
 
 # print fish.output(reporter)

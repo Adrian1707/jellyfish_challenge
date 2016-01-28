@@ -34,13 +34,6 @@ describe Tank do
       expect(jellyfish.lost).to be true
       expect(tank.restricted_zones).to eq([[1,4]])
     end
-
-    it 'when jellyfish leaves the tank, it should report last grid position as no go zone' do
-      jellyfish.position(1,1,"N")
-      jellyfish.move(remote,tank,"FFF",mover)
-      expect(jellyfish.lost).to be true
-      expect(tank.restricted_zones).to eq([[1,4]])
-    end
   end
 
 end

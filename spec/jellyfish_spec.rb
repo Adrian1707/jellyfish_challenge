@@ -27,9 +27,9 @@ describe JellyFish do
 
   describe "#turn" do
     it 'should turn left to face East when L is pressed and initially facing North' do
-    remote.set_coords(jellyfish,2,3,"N")
-    jellyfish.turn(remote,"L")
-    expect(jellyfish.facing).to eq("W")
+      remote.set_coords(jellyfish,2,3,"N")
+      jellyfish.turn(remote,"L")
+      expect(jellyfish.facing).to eq("W")
     end
   end
 
