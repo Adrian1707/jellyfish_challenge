@@ -5,6 +5,7 @@ describe JellyFish do
   let(:jellyfish) {described_class.new}
   let(:fish_tank) {Tank.new}
   let(:remote) {TankRemote.new(fish_tank)}
+  let(:reporter) {JellyFishReporter.new}
 
   describe '#initialize/new' do
     it 'when created has a default size of 1' do
@@ -50,7 +51,7 @@ describe JellyFish do
       jellyfish.move(remote,fish_tank,"FFF")
       jellyfish2.position(1,1,"N")
       jellyfish2.move(remote,fish_tank,"FFF")
-      expect(jellyfish2.output).to eq("13N")
+      expect(jellyfish2.output(reporter)).to eq("13N")
     end
   end
 
