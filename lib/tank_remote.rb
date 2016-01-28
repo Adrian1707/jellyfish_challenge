@@ -12,14 +12,14 @@ class TankRemote
     tank.fish << jellyfish
   end
 
-  def set_coords(tank,jellyfish,x,y,direction)
-    raise "The tank is not that big. Choose a smaller coordinate" unless tank_big_enough?(tank,x,y)
+  def set_coords(jellyfish,x,y,direction)
+    raise "The tank is not that big. Choose a smaller coordinate" unless tank_big_enough?(@tank,x,y)
     jellyfish.position(x,y,direction)
   end
 
-  def instruct_to_move(remote,tank,instructions,jellyfish,mover)
-    raise "Fish is currently not in the tank" unless fish_in_tank?(tank,jellyfish)
-    jellyfish.move(remote,tank,instructions,mover)
+  def instruct_to_move(remote,instructions,jellyfish,mover)
+    raise "Fish is currently not in the tank" unless fish_in_tank?(@tank,jellyfish)
+    jellyfish.move(remote,@tank,instructions,mover)
     remove_fish_if_it_goes_beyond_tank(tank,jellyfish)
   end
 

@@ -10,7 +10,6 @@ class JellyFish
 
   def initialize(size=1)
     @size = size
-    @lost = false
     @journey_history = []
   end
 
@@ -24,9 +23,7 @@ class JellyFish
   def move(remote,tank,instructions,mover)
     instructions.split("").each do |l|
       @direction = l
-      if l == "R" || l == "L"
-        self.turn(remote,l)
-      end
+      take_direction_and_send_to_turn_method(remote)
       call_move_methods(remote,tank,instructions,mover)
       set_to_lost_if_outside_tank(tank)
     end
@@ -57,6 +54,12 @@ class JellyFish
 
   def inside_tank?(tank)
     tank.tank_points.include? [@x,@y]
+  end
+
+  def take_direction_and_send_to_turn_method(remote)
+    if @direction == "R" || @direction == "L"
+      self.turn(remote,@direction)
+    end
   end
 
   def set_to_lost_if_outside_tank(tank)
@@ -90,8 +93,10 @@ tank = Tank.new
 remote = TankRemote.new(tank)
 reporter = JellyFishReporter.new
 mover = JellyFishMover.new
-fish.position(1,1,"N")
-fish.move(remote,tank,"F",mover)
+remote.place(fish,tank)
+remote.set_coords(fish,1,2,"N")
+remote.instruct_to_move(remote,"FLF",fish,mover)
+print fish.output(reporter)
 
 # print fish.output(reporter)
 # fish2.position(1,1,"N")
