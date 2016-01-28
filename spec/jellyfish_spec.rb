@@ -43,6 +43,13 @@ describe JellyFish do
       jellyfish.move(fish_tank,"LLLFFLFFFRRFF")
       expect(jellyfish.journey_history).to eq([[2,1],[3,1],[3,2],[3,3],[3,4],[3,3],[3,2]])
     end
+
+    it 'when jellyfish leaves the tank, it should report last grid position as no go zone' do
+      jellyfish.position(1,1,"N")
+      jellyfish.move(fish_tank,"FFF")
+      expect(jellyfish.lost).to be true
+      expect(jellyfish.no_go_zone).to eq([1,4])
+    end
   end
 
   describe "#lost" do

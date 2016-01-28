@@ -26,4 +26,4 @@ end
 
 tank = Tank.new
 
-print tank.tank_points
+# print tank.tank_points

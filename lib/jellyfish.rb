@@ -59,6 +59,12 @@ class JellyFish
     end
   end
 
+  def no_go_zone
+    if @lost == true
+      @restricted_zones = @journey_history[-1]
+    end
+  end
+
   private
 
   def outside_tank?(tank)
@@ -99,6 +105,7 @@ end
 
 # fish = JellyFish.new
 # tank = Tank.new
-# fish.position(3,3,"N")
-# fish.move(tank,"FFLLFF")
+# fish.position(1,1,"N")
+# fish.move(tank,"FFF")
+# print fish.journey_history
 # print fish.output
