@@ -90,26 +90,6 @@ class JellyFish
   def no_go_zone(tank)
     tank.restricted_zones << @journey_history[-1] unless contains_no_go_zone?(tank)
   end
-  #
-  # def turn_jellyfish_clockwise
-  #   fetch_keys_from_orientation
-  #   @facing = @orientation.values[@index]
-  # end
-  #
-  # def turn_jellyfish_anti_clockwise
-  #   fetch_keys_from_inverted_orientation
-  #   @facing = @orientation.invert.values[@index]
-  # end
-  #
-  # def fetch_keys_from_orientation
-  #   @keys = @orientation.keys
-  #   @index = @keys.index(@facing)
-  # end
-  #
-  # def fetch_keys_from_inverted_orientation
-  #   @keys = @orientation.invert.keys
-  #   @index = @keys.index(@facing)
-  # end
 
 end
 # #
