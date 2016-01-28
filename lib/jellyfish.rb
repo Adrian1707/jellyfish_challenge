@@ -1,3 +1,4 @@
+require_relative 'tank'
 class JellyFish
 
   attr_reader :size, :tank_position, :facing, :x, :y, :lost
@@ -46,9 +47,12 @@ class JellyFish
   end
 
   def output
-    @tank_position.join('') + @facing
+    if @lost == true
+      @tank_position.join('') + @facing + "LOST"
+    else
+      @tank_position.join('') + @facing
+    end
   end
-
 
   private
 
@@ -81,8 +85,10 @@ class JellyFish
     @keys = @orientation.invert.keys
     @index = @keys.index(@facing)
   end
+
 end
 
-# fish = JellyFish.new
-# fish.position(3,2,"N")
-# print fish.move("FRRFLLFFRRFLL")
+fish = JellyFish.new
+tank = Tank.new
+fish.position(3,2,"N")
+print fish.move(tank,"FRRFLLFFRRFLL")
