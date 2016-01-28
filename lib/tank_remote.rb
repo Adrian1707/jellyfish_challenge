@@ -4,9 +4,11 @@ require_relative 'tank'
 class TankRemote
 
   attr_reader :tank
+  ORIENTATION = {"N"=>"E","E"=>"S","S"=>"W","W"=>"N"}
 
   def initialize(tank)
     @tank = tank
+    @orientation = ORIENTATION
   end
 
   def place(jellyfish,tank)
@@ -18,10 +20,20 @@ class TankRemote
     jellyfish.position(x,y,direction)
   end
 
-  def instruct_to_move(tank,jellyfish,instructions)
+  def instruct_to_move(remote,tank,jellyfish,instructions)
     raise "Fish is currently not in the tank" unless fish_in_tank?(tank,jellyfish)
-    jellyfish.move(tank,instructions)
+    jellyfish.move(remote,tank,instructions)
     remove_fish_if_it_goes_beyond_tank(tank,jellyfish)
+  end
+
+  def turn_jellyfish_clockwise(jellyfish)
+    fetch_keys_from_orientation(jellyfish)
+    @orientation.values[@index]
+  end
+
+  def turn_jellyfish_anti_clockwise(jellyfish)
+    fetch_keys_from_inverted_orientation(jellyfish)
+    @orientation.invert.values[@index]
   end
 
   private
@@ -38,6 +50,16 @@ class TankRemote
     unless tank.tank_points.include? jellyfish.tank_position
       tank.fish.delete(jellyfish)
     end
+  end
+  
+  def fetch_keys_from_orientation(jellyfish)
+    @keys = @orientation.keys
+    @index = @keys.index(jellyfish.facing)
+  end
+
+  def fetch_keys_from_inverted_orientation(jellyfish)
+    @keys = @orientation.invert.keys
+    @index = @keys.index(jellyfish.facing)
   end
 
 end

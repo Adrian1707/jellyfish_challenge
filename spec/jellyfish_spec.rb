@@ -26,7 +26,7 @@ describe JellyFish do
   describe "#turn" do
     it 'should turn left to face East when L is pressed and initially facing North' do
     remote.set_coords(fish_tank,jellyfish,2,3,"N")
-    jellyfish.turn("L")
+    jellyfish.turn(remote,"L")
     expect(jellyfish.facing).to eq("W")
     end
   end
@@ -34,22 +34,22 @@ describe JellyFish do
   describe "#move" do
     it 'should make a record of all the moves made by the jellyfish' do
       jellyfish.position(1,1,"N")
-      jellyfish.move(fish_tank,"FFRF")
+      jellyfish.move(remote,fish_tank,"FFRF")
       expect(jellyfish.journey_history).to eq([[1,2],[1,3],[2,3]])
     end
 
     it 'should make a record of complex moves' do
       jellyfish.position(1,1,"N")
-      jellyfish.move(fish_tank,"LLLFFLFFFRRFF")
+      jellyfish.move(remote,fish_tank,"LLLFFLFFFRRFF")
       expect(jellyfish.journey_history).to eq([[2,1],[3,1],[3,2],[3,3],[3,4],[3,3],[3,2]])
     end
 
     it 'should not allow the jellyfish to move if the target position is in the no go zones' do
       jellyfish2 = JellyFish.new
       jellyfish.position(1,1,"N")
-      jellyfish.move(fish_tank,"FFF")
+      jellyfish.move(remote,fish_tank,"FFF")
       jellyfish2.position(1,1,"N")
-      jellyfish2.move(fish_tank,"FFF")
+      jellyfish2.move(remote,fish_tank,"FFF")
       expect(jellyfish2.output).to eq("13N")
     end
   end
@@ -58,7 +58,7 @@ describe JellyFish do
     it 'should report as "LOST" if it goes outside the tank at any point' do
       remote.place(jellyfish,fish_tank)
       remote.set_coords(fish_tank,jellyfish,3,2,"N")
-      remote.instruct_to_move(fish_tank,jellyfish,"FRRFLLFFRRFLL")
+      remote.instruct_to_move(remote,fish_tank,jellyfish,"FRRFLLFFRRFLL")
       expect(jellyfish.lost).to be true
     end
   end

@@ -18,10 +18,10 @@ class JellyFish
     @facing = direction
   end
 
-  def move(tank,instructions)
+  def move(remote,tank,instructions)
     instructions.split("").each do |l|
       if l == "R" || l == "L"
-        self.turn(l)
+        self.turn(remote,l)
       end
       if l == "F" && @facing == "N"
         @y = @y+=1 unless tank.restricted_zones.include? [@x,@y+1]
@@ -41,11 +41,11 @@ class JellyFish
     @tank_position = [@x,@y]
   end
 
-  def turn(direction)
+  def turn(remote,direction)
     if direction == "R"
-      turn_jellyfish_clockwise
+      @facing = remote.turn_jellyfish_clockwise(self)
     elsif direction =="L"
-      turn_jellyfish_anti_clockwise
+      @facing = remote.turn_jellyfish_anti_clockwise(self)
     end
   end
 
@@ -90,39 +90,39 @@ class JellyFish
   def no_go_zone(tank)
     tank.restricted_zones << @journey_history[-1] unless contains_no_go_zone?(tank)
   end
-
-  def turn_jellyfish_clockwise
-    fetch_keys_from_orientation
-    @facing = @orientation.values[@index]
-  end
-
-  def turn_jellyfish_anti_clockwise
-    fetch_keys_from_inverted_orientation
-    @facing = @orientation.invert.values[@index]
-  end
-
-  def fetch_keys_from_orientation
-    @keys = @orientation.keys
-    @index = @keys.index(@facing)
-  end
-
-  def fetch_keys_from_inverted_orientation
-    @keys = @orientation.invert.keys
-    @index = @keys.index(@facing)
-  end
+  #
+  # def turn_jellyfish_clockwise
+  #   fetch_keys_from_orientation
+  #   @facing = @orientation.values[@index]
+  # end
+  #
+  # def turn_jellyfish_anti_clockwise
+  #   fetch_keys_from_inverted_orientation
+  #   @facing = @orientation.invert.values[@index]
+  # end
+  #
+  # def fetch_keys_from_orientation
+  #   @keys = @orientation.keys
+  #   @index = @keys.index(@facing)
+  # end
+  #
+  # def fetch_keys_from_inverted_orientation
+  #   @keys = @orientation.invert.keys
+  #   @index = @keys.index(@facing)
+  # end
 
 end
-#
-fish = JellyFish.new
-fish2 = JellyFish.new
-tank = Tank.new
-fish.position(1,1,"N")
-fish.move(tank,"FFF")
-print fish.output
-fish2.position(1,1,"N")
-fish2.move(tank,"FFFFFFFFFLLFL")
+# #
+# fish = JellyFish.new
+# fish2 = JellyFish.new
+# tank = Tank.new
+# fish.position(1,1,"N")
+# fish.move(tank,"FFF")
 # print fish.output
-print fish2.output
+# fish2.position(1,1,"N")
+# fish2.move(tank,"FFFFFFFFFLLFL")
+# # print fish.output
+# print fish2.output
 # print tank.restricted_zones
 # fish.position(1,1,"N")
 # fish.move(tank,"FFF")
