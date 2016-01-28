@@ -2,7 +2,7 @@ class Tank
 
   attr_reader :size, :tank_points, :fish
 
-  def initialize(size=51)
+  def initialize(size=6)
     @size = size
     @tank_points =[]
     @fish = []
@@ -22,8 +22,3 @@ class Tank
   end
 
 end
-
-
-# tank = Tank.new
-
-# print tank.tank_points

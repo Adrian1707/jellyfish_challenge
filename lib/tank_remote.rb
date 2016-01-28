@@ -18,10 +18,10 @@ class TankRemote
     jellyfish.position(x,y)
   end
 
-  def instruct_to_move(tank,jellyfish,x,y)
+  def instruct_to_move(tank,jellyfish,instructions)
     raise "Fish is currently not in the tank" unless fish_in_tank?(tank,jellyfish)
-    jellyfish.move(x,y)
-    remove_fish_from_tank_if_it_goes_beyond_tank(tank,jellyfish)
+    jellyfish.move(instructions)
+    remove_fish_if_it_goes_beyond_tank(tank,jellyfish)
   end
 
   private
@@ -34,7 +34,7 @@ class TankRemote
     tank.tank_points.include? [x,y]
   end
 
-  def remove_fish_from_tank_if_it_goes_beyond_tank(tank,jellyfish)
+  def remove_fish_if_it_goes_beyond_tank(tank,jellyfish)
     unless tank.tank_points.include? jellyfish.tank_position
       tank.fish.delete(jellyfish)
     end
@@ -45,11 +45,10 @@ end
 # fish = JellyFish.new
 # tank = Tank.new(5)
 # remote = TankRemote.new(tank)
-# # print tank.tank_points
-# # # print tank.tank_points.include? [1,2]
+# # # print tank.tank_points
+# # # # print tank.tank_points.include? [1,2]
 # remote.place(fish,tank)
 # remote.set_coords(tank,fish,2,2)
-# print fish.tank_position
+# # print fish.tank_position
 # remote.instruct_to_move(tank,fish,10,10)
-# print fish.tank_position
 # # remote.instruct_to_move(fish,1,3)
