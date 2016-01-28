@@ -5,7 +5,7 @@ require 'tank'
 describe TankRemote do
 
   let(:remote) {described_class.new(fish_tank)}
-  let(:fish_tank) {Tank.new(6)}
+  let(:fish_tank) {Tank.new}
   let(:jellyfish) {JellyFish.new}
 
   describe "initialize/new" do
@@ -25,8 +25,8 @@ describe TankRemote do
 
   describe "#set_coordinate" do
     it 'should place the fish in specific tank on specific coordinates 2,4' do
-      remote.set_coords(fish_tank,jellyfish,2,4,"N")
-      expect(jellyfish.tank_position).to eq([2,4])
+      remote.set_coords(fish_tank,jellyfish,1,3,"N")
+      expect(jellyfish.tank_position).to eq([1,3])
     end
 
     it 'should raise error is coordinate is not in the tank' do
@@ -51,6 +51,18 @@ describe TankRemote do
       remote.set_coords(fish_tank,jellyfish,2,2,"N")
       remote.instruct_to_move(fish_tank,jellyfish,"LFFFF")
       expect(fish_tank.fish).not_to include(jellyfish)
+    end
+
+    xit 'should not move forward if the tank position has a scent left over from a lost jellyfish' do
+      jellyfish2 = JellyFish.new
+      remote.place(jellyfish,fish_tank)
+      remote.set_coords(fish_tank,jellyfish,3,3,"N")
+      remote.instruct_to_move(fish_tank,jellyfish,"FFLLFF")
+      remote.place(jellyfish2,fish_tank)
+      remote.set_coords(fish_tank,jellyfish2,3,3,"N")
+      remote.instruct_to_move(fish_tank,jellyfish2,"FFLLFF")
+      expect(jellyfish2.output).to eq("33S")
+      # expect(jellyfish.output).to eq("33SLOST")
     end
 
   end

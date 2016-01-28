@@ -1,7 +1,7 @@
 require_relative 'tank'
 class JellyFish
 
-  attr_reader :size, :tank_position, :facing, :x, :y, :lost
+  attr_reader :size, :tank_position, :facing, :x, :y, :lost, :journey_history
 
   ORIENTATION = {"N"=>"E","E"=>"S","S"=>"W","W"=>"N"}
 
@@ -9,6 +9,7 @@ class JellyFish
     @size = size
     @orientation = ORIENTATION
     @lost = false
+    @journey_history = []
   end
 
   def position(x,y,direction)
@@ -25,12 +26,16 @@ class JellyFish
       end
       if l == "F" && @facing == "N"
         @y = @y+=1
+        record_journey_history
       elsif l == "F" && @facing == "S"
         @y = @y-=1
+        record_journey_history
       elsif l == "F" && @facing == "E"
         @x = @x+=1
+        record_journey_history
       elsif l == "F" && @facing == "W"
         @x = @x-=1
+        record_journey_history
       end
       set_to_lost_if_outside_tank(tank)
     end
@@ -66,6 +71,10 @@ class JellyFish
     end
   end
 
+  def record_journey_history
+    @journey_history << [@x,@y]
+  end
+
   def turn_jellyfish_clockwise
     fetch_keys_from_orientation
     @facing = @orientation.values[@index]
@@ -88,7 +97,8 @@ class JellyFish
 
 end
 
-fish = JellyFish.new
-tank = Tank.new
-fish.position(3,2,"N")
-print fish.move(tank,"FRRFLLFFRRFLL")
+# fish = JellyFish.new
+# tank = Tank.new
+# fish.position(3,3,"N")
+# fish.move(tank,"FFLLFF")
+# print fish.output

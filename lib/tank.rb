@@ -26,4 +26,4 @@ end
 
 tank = Tank.new
 
-print tank.tank_points.include? [5,2]
+print tank.tank_points

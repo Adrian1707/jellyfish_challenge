@@ -14,7 +14,7 @@ describe Tank do
       expect(tank.tank_points.length).to eq(24)
     end
 
-    it 'should have an x,y maximum value of 50,50' do
+    it 'should have an x,y maximum value of 5,3' do
       expect(tank.tank_points.max).to eq([5,3])
     end
 

@@ -10,6 +10,10 @@ describe JellyFish do
     it 'when created has a default size of 1' do
       expect(jellyfish.size).to eq(1)
     end
+
+    it 'should have a journey history array set' do
+      expect(jellyfish.journey_history).to eq([])
+    end
   end
 
   describe "#tank_position" do
@@ -24,6 +28,20 @@ describe JellyFish do
     remote.set_coords(fish_tank,jellyfish,2,3,"N")
     jellyfish.turn("L")
     expect(jellyfish.facing).to eq("W")
+    end
+  end
+
+  describe "#move" do
+    it 'should make a record of all the moves made by the jellyfish' do
+      jellyfish.position(1,1,"N")
+      jellyfish.move(fish_tank,"FFRF")
+      expect(jellyfish.journey_history).to eq([[1,2],[1,3],[2,3]])
+    end
+
+    it 'should make a record of complex moves' do
+      jellyfish.position(1,1,"N")
+      jellyfish.move(fish_tank,"LLLFFLFFFRRFF")
+      expect(jellyfish.journey_history).to eq([[2,1],[3,1],[3,2],[3,3],[3,4],[3,3],[3,2]])
     end
   end
 
