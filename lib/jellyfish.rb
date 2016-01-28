@@ -1,12 +1,13 @@
+require_relative 'tank_remote'
 require_relative 'tank'
+require_relative 'jellyfish_reporter'
+
 class JellyFish
 
   attr_reader :size, :tank_position, :facing, :x, :y, :lost, :journey_history
-  ORIENTATION = {"N"=>"E","E"=>"S","S"=>"W","W"=>"N"}
 
   def initialize(size=1)
     @size = size
-    @orientation = ORIENTATION
     @lost = false
     @journey_history = []
   end
@@ -49,11 +50,11 @@ class JellyFish
     end
   end
 
-  def output
+  def output(reporter)
     if @lost == true
-      report_coordinates_with_lost_message
+      reporter.report_coordinates_with_lost_message(self)
     else
-      report_coordinates
+      reporter.report_coordinates(self)
     end
   end
 
@@ -79,30 +80,23 @@ class JellyFish
     @journey_history << [@x,@y]
   end
 
-  def report_coordinates
-    @tank_position.join('') + @facing
-  end
-
-  def report_coordinates_with_lost_message
-    @tank_position.join('') + @facing + "LOST"
-  end
-
   def no_go_zone(tank)
     tank.restricted_zones << @journey_history[-1] unless contains_no_go_zone?(tank)
   end
 
 end
-# #
+
 # fish = JellyFish.new
 # fish2 = JellyFish.new
 # tank = Tank.new
+# remote = TankRemote.new(tank)
+# reporter = JellyFishReporter.new
 # fish.position(1,1,"N")
-# fish.move(tank,"FFF")
-# print fish.output
+# fish.move(remote,tank,"FFF")
+# print fish.output(reporter)
 # fish2.position(1,1,"N")
-# fish2.move(tank,"FFFFFFFFFLLFL")
-# # print fish.output
-# print fish2.output
+# fish2.move(remote,tank,"FFFFFFFFFLLFL")
+# print fish2.output(reporter)
 # print tank.restricted_zones
 # fish.position(1,1,"N")
 # fish.move(tank,"FFF")

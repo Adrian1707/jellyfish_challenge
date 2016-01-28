@@ -49,8 +49,6 @@ describe TankRemote do
     it 'should remove the jellyfish from the tank if it goes beyond the boundaries' do
       remote.place(jellyfish,fish_tank)
       remote.set_coords(fish_tank,jellyfish,2,2,"N")
-      p jellyfish.facing
-      p jellyfish
       remote.instruct_to_move(remote,fish_tank,jellyfish,"LFFFF")
       expect(fish_tank.fish).not_to include(jellyfish)
     end

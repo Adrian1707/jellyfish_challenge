@@ -1,6 +1,3 @@
-require_relative 'jellyfish'
-require_relative 'tank'
-
 class TankRemote
 
   attr_reader :tank
@@ -51,7 +48,7 @@ class TankRemote
       tank.fish.delete(jellyfish)
     end
   end
-  
+
   def fetch_keys_from_orientation(jellyfish)
     @keys = @orientation.keys
     @index = @keys.index(jellyfish.facing)
@@ -63,14 +60,3 @@ class TankRemote
   end
 
 end
-# #
-# fish = JellyFish.new
-# tank = Tank.new(5)
-# remote = TankRemote.new(tank)
-# # # print tank.tank_points
-# # # # print tank.tank_points.include? [1,2]
-# remote.place(fish,tank)
-# remote.set_coords(tank,fish,2,2)
-# # print fish.tank_position
-# remote.instruct_to_move(tank,fish,10,10)
-# # remote.instruct_to_move(fish,1,3)
