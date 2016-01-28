@@ -11,8 +11,6 @@ class Tank
     create_tank
   end
 
-
-
   private
 
   def create_tank

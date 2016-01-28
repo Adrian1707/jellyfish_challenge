@@ -39,7 +39,6 @@ class JellyFish
       set_to_lost_if_outside_tank(tank)
     end
     @tank_position = [@x,@y]
-    return output
   end
 
   def turn(direction)
@@ -52,31 +51,44 @@ class JellyFish
 
   def output
     if @lost == true
-      @tank_position.join('') + @facing + "LOST"
+      report_coordinates_with_lost_message
     else
-      @tank_position.join('') + @facing
+      report_coordinates
     end
   end
 
-  def no_go_zone(tank)
-      tank.restricted_zones << @journey_history[-1] unless tank.restricted_zones.include? @journey_history[-1]
-  end
 
   private
 
-  def outside_tank?(tank)
+  def inside_tank?(tank)
     tank.tank_points.include? [@x,@y]
   end
 
   def set_to_lost_if_outside_tank(tank)
-    if outside_tank?(tank) == false
+    if inside_tank?(tank) == false
       @lost = true
       no_go_zone(tank)
     end
   end
 
+  def contains_no_go_zone?(tank)
+    tank.restricted_zones.include? @journey_history[-1]
+  end
+
   def record_journey_history
     @journey_history << [@x,@y]
+  end
+
+  def report_coordinates
+    @tank_position.join('') + @facing
+  end
+
+  def report_coordinates_with_lost_message
+    @tank_position.join('') + @facing + "LOST"
+  end
+
+  def no_go_zone(tank)
+    tank.restricted_zones << @journey_history[-1] unless contains_no_go_zone?(tank)
   end
 
   def turn_jellyfish_clockwise
@@ -106,11 +118,10 @@ fish2 = JellyFish.new
 tank = Tank.new
 fish.position(1,1,"N")
 fish.move(tank,"FFF")
-fish.no_go_zone(tank)
-# print tank.restricted_zones
-fish2.position(1,1,"N")
-fish2.move(tank,"FFFFFF")
 print fish.output
+fish2.position(1,1,"N")
+fish2.move(tank,"FFFFFFFFFLLFL")
+# print fish.output
 print fish2.output
 # print tank.restricted_zones
 # fish.position(1,1,"N")

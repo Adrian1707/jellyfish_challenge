@@ -4,6 +4,7 @@ describe Tank do
 
   let(:tank) {described_class.new}
   let(:jellyfish) {JellyFish.new}
+  let(:remote) {TankRemote.new(fish_tank)}
 
   describe '#initialize/new' do
     it 'when created has a default size of 5x3' do
@@ -11,7 +12,7 @@ describe Tank do
       expect(tank.width).to eq(6)
     end
 
-    it 'should create a tank consisting arrays of coordinates' do
+    it 'should create a tank consisting of array of coordinates' do
       expect(tank.tank_points.length).to eq(24)
     end
 
@@ -28,7 +29,13 @@ describe Tank do
     it 'should keep track of restricted zones' do
       jellyfish.position(1,1,"N")
       jellyfish.move(tank,"FFF")
-      jellyfish.no_go_zone(tank)
+      expect(jellyfish.lost).to be true
+      expect(tank.restricted_zones).to eq([[1,4]])
+    end
+
+    it 'when jellyfish leaves the tank, it should report last grid position as no go zone' do
+      jellyfish.position(1,1,"N")
+      jellyfish.move(tank,"FFF")
       expect(jellyfish.lost).to be true
       expect(tank.restricted_zones).to eq([[1,4]])
     end

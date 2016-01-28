@@ -29,7 +29,7 @@ describe TankRemote do
       expect(jellyfish.tank_position).to eq([1,3])
     end
 
-    it 'should raise error is coordinate is not in the tank' do
+    it 'should raise error if coordinate is not in the tank' do
       expect{remote.set_coords(fish_tank,jellyfish,10,10,"N")}.to raise_error "The tank is not that big. Choose a smaller coordinate"
     end
   end
@@ -52,19 +52,6 @@ describe TankRemote do
       remote.instruct_to_move(fish_tank,jellyfish,"LFFFF")
       expect(fish_tank.fish).not_to include(jellyfish)
     end
-
-    xit 'should not move forward if the tank position has a scent left over from a lost jellyfish' do
-      jellyfish2 = JellyFish.new
-      remote.place(jellyfish,fish_tank)
-      remote.set_coords(fish_tank,jellyfish,3,3,"N")
-      remote.instruct_to_move(fish_tank,jellyfish,"FFLLFF")
-      remote.place(jellyfish2,fish_tank)
-      remote.set_coords(fish_tank,jellyfish2,3,3,"N")
-      remote.instruct_to_move(fish_tank,jellyfish2,"FFLLFF")
-      expect(jellyfish2.output).to eq("33S")
-      # expect(jellyfish.output).to eq("33SLOST")
-    end
-
   end
 
 end
