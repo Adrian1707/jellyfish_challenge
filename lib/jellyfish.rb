@@ -21,25 +21,45 @@ class JellyFish
 
   def move(remote,tank,instructions)
     instructions.split("").each do |l|
+      @direction = l
       if l == "R" || l == "L"
         self.turn(remote,l)
       end
-      if l == "F" && @facing == "N"
-        @y = @y+=1 unless tank.restricted_zones.include? [@x,@y+1]
-        record_journey_history
-      elsif l == "F" && @facing == "S"
-        @y = @y-=1 unless tank.restricted_zones.include? [@x,@y-1]
-        record_journey_history
-      elsif l == "F" && @facing == "E"
-        @x = @x+=1 unless tank.restricted_zones.include? [@x+1,@y]
-        record_journey_history
-      elsif l == "F" && @facing == "W"
-        @x = @x-=1 unless tank.restricted_zones.include? [@x-1,@y]
-        record_journey_history
-      end
+      move_north(remote,tank,instructions)
+      move_south(remote,tank,instructions)
+      move_east(remote,tank,instructions)
+      move_west(remote,tank,instructions)
       set_to_lost_if_outside_tank(tank)
     end
     @tank_position = [@x,@y]
+  end
+
+  def move_north(remote,tank,instructions)
+    if @direction == "F" && @facing == "N"
+      @y = @y+=1 unless tank.restricted_zones.include? [@x,@y+1]
+      record_journey_history
+    end
+  end
+
+  def move_south(remote,tank,instructions)
+    if @direction == "F" && @facing == "S"
+      @y = @y-=1 unless tank.restricted_zones.include? [@x,@y-1]
+      record_journey_history
+    end
+  end
+
+  def move_east(remote,tank,instructions)
+    if @direction == "F" && @facing == "E"
+      @x = @x+=1 unless tank.restricted_zones.include? [@x+1,@y]
+      record_journey_history
+    end
+  end
+
+  def move_west(remote,tank,instructions)
+    if @direction == "F" && @facing == "W"
+      @x = @x-=1 unless tank.restricted_zones.include? [@x-1,@y]
+      record_journey_history
+    end
   end
 
   def turn(remote,direction)
@@ -58,7 +78,6 @@ class JellyFish
     end
   end
 
-"test"
   private
 
   def inside_tank?(tank)
