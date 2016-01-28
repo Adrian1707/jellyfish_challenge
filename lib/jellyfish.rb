@@ -9,17 +9,17 @@ class JellyFish
     @orientation = ORIENTATION
   end
 
-  def position(x,y)
+  def position(x,y,direction)
     @x = x
     @y = y
     @tank_position = [@x,@y]
-    @facing = "N"
+    @facing = direction
   end
 
   def move(instructions)
     instructions.split("").each do |l|
       if l == "R" || l == "L"
-      self.turn(l)
+        self.turn(l)
       end
       if l == "F" && @facing == "N"
         @y = @y+=1
@@ -32,23 +32,44 @@ class JellyFish
       end
     end
     @tank_position = [@x,@y]
+    return output
   end
 
   def turn(direction)
-      if direction == "R"
-        @keys = @orientation.keys
-        index = @keys.index(@facing)
-        @facing = @orientation.values[index]
-      elsif direction =="L"
-        @keys = @orientation.invert.keys
-        index = @keys.index(@facing)
-        @facing = @orientation.invert.values[index]
-      end
+    if direction == "R"
+      turn_jellyfish_clockwise
+    elsif direction =="L"
+      turn_jellyfish_anti_clockwise
+    end
   end
 
+  def output
+    @tank_position.join('') + @facing
+  end
+
+  private
+
+  def turn_jellyfish_clockwise
+    fetch_keys_from_orientation
+    @facing = @orientation.values[@index]
+  end
+
+  def turn_jellyfish_anti_clockwise
+    fetch_keys_from_inverted_orientation
+    @facing = @orientation.invert.values[@index]
+  end
+
+  def fetch_keys_from_orientation
+    @keys = @orientation.keys
+    @index = @keys.index(@facing)
+  end
+
+  def fetch_keys_from_inverted_orientation
+    @keys = @orientation.invert.keys
+    @index = @keys.index(@facing)
+  end
 end
 
 # fish = JellyFish.new
-# fish.position(2,2)
-# fish.move("FLFLF")
-# print fish.tank_position
+# fish.position(1,1,"E")
+# print fish.move("RFRFRFRF")
