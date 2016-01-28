@@ -1,12 +1,13 @@
 require 'tank_remote'
 require 'jellyfish'
 require 'tank'
-
+require 'jellyfish_mover'
 describe TankRemote do
 
   let(:remote) {described_class.new(fish_tank)}
   let(:fish_tank) {Tank.new}
   let(:jellyfish) {JellyFish.new}
+  let(:mover) {JellyFishMover.new}
 
   describe "initialize/new" do
     it 'should initialize with a new tank object' do
@@ -38,18 +39,18 @@ describe TankRemote do
     it 'should move the jellyfish 1 co-ordinate across' do
       remote.place(jellyfish,fish_tank)
       remote.set_coords(fish_tank,jellyfish,3,3,"N")
-      remote.instruct_to_move(remote,fish_tank,jellyfish,"FRF")
+      remote.instruct_to_move(remote,fish_tank,"FRF",jellyfish,mover)
       expect(jellyfish.tank_position).to eq([4,4])
     end
 
     it 'should raise an error if fish is not in the tank' do
-      expect{remote.instruct_to_move(remote,fish_tank,jellyfish,"FRFRLF")}.to raise_error "Fish is currently not in the tank"
+      expect{remote.instruct_to_move(remote,fish_tank,"FRFRLF",jellyfish,mover)}.to raise_error "Fish is currently not in the tank"
     end
 
     it 'should remove the jellyfish from the tank if it goes beyond the boundaries' do
       remote.place(jellyfish,fish_tank)
       remote.set_coords(fish_tank,jellyfish,2,2,"N")
-      remote.instruct_to_move(remote,fish_tank,jellyfish,"LFFFF")
+      remote.instruct_to_move(remote,fish_tank,"FFFF",jellyfish,mover)
       expect(fish_tank.fish).not_to include(jellyfish)
     end
   end

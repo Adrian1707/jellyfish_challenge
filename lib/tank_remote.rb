@@ -17,9 +17,9 @@ class TankRemote
     jellyfish.position(x,y,direction)
   end
 
-  def instruct_to_move(remote,tank,jellyfish,instructions)
+  def instruct_to_move(remote,tank,instructions,jellyfish,mover)
     raise "Fish is currently not in the tank" unless fish_in_tank?(tank,jellyfish)
-    jellyfish.move(remote,tank,instructions)
+    jellyfish.move(remote,tank,instructions,mover)
     remove_fish_if_it_goes_beyond_tank(tank,jellyfish)
   end
 

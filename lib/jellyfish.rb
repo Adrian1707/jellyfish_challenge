@@ -1,10 +1,12 @@
 require_relative 'tank_remote'
 require_relative 'tank'
 require_relative 'jellyfish_reporter'
+require_relative 'jellyfish_mover'
 
 class JellyFish
 
-  attr_reader :size, :tank_position, :facing, :x, :y, :lost, :journey_history
+  attr_reader :size, :tank_position, :facing, :lost, :journey_history, :direction
+  attr_accessor :x, :y
 
   def initialize(size=1)
     @size = size
@@ -19,47 +21,16 @@ class JellyFish
     @facing = direction
   end
 
-  def move(remote,tank,instructions)
+  def move(remote,tank,instructions,mover)
     instructions.split("").each do |l|
       @direction = l
       if l == "R" || l == "L"
         self.turn(remote,l)
       end
-      move_north(remote,tank,instructions)
-      move_south(remote,tank,instructions)
-      move_east(remote,tank,instructions)
-      move_west(remote,tank,instructions)
+      call_move_methods(remote,tank,instructions,mover)
       set_to_lost_if_outside_tank(tank)
     end
     @tank_position = [@x,@y]
-  end
-
-  def move_north(remote,tank,instructions)
-    if @direction == "F" && @facing == "N"
-      @y = @y+=1 unless tank.restricted_zones.include? [@x,@y+1]
-      record_journey_history
-    end
-  end
-
-  def move_south(remote,tank,instructions)
-    if @direction == "F" && @facing == "S"
-      @y = @y-=1 unless tank.restricted_zones.include? [@x,@y-1]
-      record_journey_history
-    end
-  end
-
-  def move_east(remote,tank,instructions)
-    if @direction == "F" && @facing == "E"
-      @x = @x+=1 unless tank.restricted_zones.include? [@x+1,@y]
-      record_journey_history
-    end
-  end
-
-  def move_west(remote,tank,instructions)
-    if @direction == "F" && @facing == "W"
-      @x = @x-=1 unless tank.restricted_zones.include? [@x-1,@y]
-      record_journey_history
-    end
   end
 
   def turn(remote,direction)
@@ -78,6 +49,10 @@ class JellyFish
     end
   end
 
+  def record_journey_history
+    @journey_history << [@x,@y]
+  end
+
   private
 
   def inside_tank?(tank)
@@ -91,12 +66,15 @@ class JellyFish
     end
   end
 
-  def contains_no_go_zone?(tank)
-    tank.restricted_zones.include? @journey_history[-1]
+  def call_move_methods(remote,tank,instructions,mover)
+    mover.move_north(remote,tank,instructions,self)
+    mover.move_south(remote,tank,instructions,self)
+    mover.move_east(remote,tank,instructions,self)
+    mover.move_west(remote,tank,instructions,self)
   end
 
-  def record_journey_history
-    @journey_history << [@x,@y]
+  def contains_no_go_zone?(tank)
+    tank.restricted_zones.include? @journey_history[-1]
   end
 
   def no_go_zone(tank)
@@ -106,13 +84,15 @@ class JellyFish
 end
 
 
-# fish = JellyFish.new
-# fish2 = JellyFish.new
-# tank = Tank.new
-# remote = TankRemote.new(tank)
-# reporter = JellyFishReporter.new
-# fish.position(1,1,"N")
-# fish.move(remote,tank,"FFF")
+fish = JellyFish.new
+fish2 = JellyFish.new
+tank = Tank.new
+remote = TankRemote.new(tank)
+reporter = JellyFishReporter.new
+mover = JellyFishMover.new
+fish.position(1,1,"N")
+fish.move(remote,tank,"F",mover)
+
 # print fish.output(reporter)
 # fish2.position(1,1,"N")
 # fish2.move(remote,tank,"FFFFFFFFFLLFL")

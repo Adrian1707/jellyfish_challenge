@@ -1,10 +1,12 @@
 require 'tank'
+require 'jellyfish_mover'
 
 describe Tank do
 
   let(:tank) {described_class.new}
   let(:jellyfish) {JellyFish.new}
   let(:remote) {TankRemote.new(tank)}
+  let(:mover) {JellyFishMover.new}
 
   describe '#initialize/new' do
     it 'when created has a default size of 5x3' do
@@ -28,14 +30,14 @@ describe Tank do
   describe "#restricted_zones" do
     it 'should keep track of restricted zones' do
       jellyfish.position(1,1,"N")
-      jellyfish.move(remote,tank,"FFF")
+      jellyfish.move(remote,tank,"FFF",mover)
       expect(jellyfish.lost).to be true
       expect(tank.restricted_zones).to eq([[1,4]])
     end
 
     it 'when jellyfish leaves the tank, it should report last grid position as no go zone' do
       jellyfish.position(1,1,"N")
-      jellyfish.move(remote,tank,"FFF")
+      jellyfish.move(remote,tank,"FFF",mover)
       expect(jellyfish.lost).to be true
       expect(tank.restricted_zones).to eq([[1,4]])
     end
