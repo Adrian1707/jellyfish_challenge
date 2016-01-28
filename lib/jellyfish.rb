@@ -58,7 +58,7 @@ class JellyFish
     end
   end
 
-
+"test"
   private
 
   def inside_tank?(tank)
@@ -85,6 +85,7 @@ class JellyFish
   end
 
 end
+
 
 # fish = JellyFish.new
 # fish2 = JellyFish.new
