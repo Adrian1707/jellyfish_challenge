@@ -12,7 +12,7 @@ I also used dependency injection throughout this task, and no class currently de
 interact with another it's done though dependency injection.
 
 My main regret during this challenge was the absence of doubles and mocks in my spec files. I initially tested using doubles, then found my tests were failing, but my code was working when I ran manual feature tests in the console. I then decided to reference the classes
-themselves and planned to introduce doubles/mocks towards the end. Given I wanted to get this in my the end of the week I ran out of time.
+themselves and planned to introduce doubles/mocks towards the end. Given I wanted to get this in by the end of the week I ran out of time.
 
 I continued refactoring my Jellyfish class and split it out to a mover class and a reporter class (it's not the responsibility of the jellyfish to report it's current location). Spec files were not made for these classes as they were already tested via the initial jellyfish class.
 
