@@ -53,8 +53,8 @@ describe JellyFish do
       jellyfish.move(remote,fish_tank,"FFF",mover)
       jellyfish2.position(1,1,"N")
       jellyfish2.move(remote,fish_tank,"FFF",mover)
-      expect(jellyfish.output(reporter)).to eq("14NLOST")
-      expect(jellyfish2.output(reporter)).to eq("13N")
+      expect(reporter.output(jellyfish)).to eq("14NLOST")
+      expect(reporter.output(jellyfish2)).to eq("13N")
     end
   end
 

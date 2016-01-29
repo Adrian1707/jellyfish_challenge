@@ -38,14 +38,6 @@ class JellyFish
     end
   end
 
-  def output(reporter)
-    if @lost == true
-      reporter.report_coordinates_with_lost_message(self)
-    else
-      reporter.report_coordinates(self)
-    end
-  end
-
   private
 
   def inside_tank?(tank)
@@ -92,7 +84,8 @@ mover = JellyFishMover.new
 remote.place(fish)
 remote.set_coords(fish,1,1,"N")
 remote.instruct_to_move("FF",fish,mover)
-print fish.output(reporter)
+print reporter.output(fish)
+# print fish.tank_position
 
 # print fish.output(reporter)
 # fish2.position(1,1,"N")
