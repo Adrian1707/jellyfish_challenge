@@ -27,8 +27,9 @@ describe JellyFish do
 
   describe "#turn" do
     it 'should turn left to face East when L is pressed and initially facing North' do
+      remote.place(jellyfish)
       remote.set_coords(jellyfish,2,3,"N")
-      jellyfish.turn(remote,"L")
+      remote.instruct_to_move("L",jellyfish,mover)
       expect(jellyfish.facing).to eq("W")
     end
   end
@@ -52,15 +53,16 @@ describe JellyFish do
       jellyfish.move(remote,fish_tank,"FFF",mover)
       jellyfish2.position(1,1,"N")
       jellyfish2.move(remote,fish_tank,"FFF",mover)
+      expect(jellyfish.output(reporter)).to eq("14NLOST")
       expect(jellyfish2.output(reporter)).to eq("13N")
     end
   end
 
   describe "#lost" do
     it 'should report as "LOST" if it goes outside the tank at any point' do
-      remote.place(jellyfish,fish_tank)
+      remote.place(jellyfish)
       remote.set_coords(jellyfish,3,2,"N")
-      remote.instruct_to_move(remote,"FRRFLLFFRRFLL",jellyfish,mover)
+      remote.instruct_to_move("FRRFLLFFRRFLL",jellyfish,mover)
       expect(jellyfish.lost).to be true
     end
   end

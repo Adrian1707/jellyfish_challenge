@@ -8,19 +8,19 @@ class TankRemote
     @orientation = ORIENTATION
   end
 
-  def place(jellyfish,tank)
-    tank.fish << jellyfish
+  def place(jellyfish)
+    @tank.fish << jellyfish
   end
 
   def set_coords(jellyfish,x,y,direction)
-    raise "The tank is not that big. Choose a smaller coordinate" unless tank_big_enough?(@tank,x,y)
+    raise "The tank is not that big. Choose a smaller coordinate" unless tank_big_enough?(x,y)
     jellyfish.position(x,y,direction)
   end
 
-  def instruct_to_move(remote,instructions,jellyfish,mover)
-    raise "Fish is currently not in the tank" unless fish_in_tank?(@tank,jellyfish)
-    jellyfish.move(remote,@tank,instructions,mover)
-    remove_fish_if_it_goes_beyond_tank(tank,jellyfish)
+  def instruct_to_move(instructions,jellyfish,mover)
+    raise "Fish is currently not in the tank" unless fish_in_tank?(jellyfish)
+    jellyfish.move(self,@tank,instructions,mover)
+    remove_fish_if_it_goes_beyond_tank(jellyfish)
   end
 
   def turn_jellyfish_clockwise(jellyfish)
@@ -35,17 +35,17 @@ class TankRemote
 
   private
 
-  def fish_in_tank?(tank,jellyfish)
-    tank.fish.include? jellyfish
+  def fish_in_tank?(jellyfish)
+    @tank.fish.include? jellyfish
   end
 
-  def tank_big_enough?(tank,x,y)
-    tank.tank_points.include? [x,y]
+  def tank_big_enough?(x,y)
+    @tank.tank_points.include? [x,y]
   end
 
-  def remove_fish_if_it_goes_beyond_tank(tank,jellyfish)
-    unless tank.tank_points.include? jellyfish.tank_position
-      tank.fish.delete(jellyfish)
+  def remove_fish_if_it_goes_beyond_tank(jellyfish)
+    unless @tank.tank_points.include? jellyfish.tank_position
+      @tank.fish.delete(jellyfish)
     end
   end
 

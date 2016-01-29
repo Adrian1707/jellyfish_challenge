@@ -18,7 +18,7 @@ describe TankRemote do
 
   describe "#place" do
     it 'should place the jellyfish onto a position in the tank' do
-      remote.place(jellyfish,fish_tank)
+      remote.place(jellyfish)
       expect(fish_tank.fish).to include(jellyfish)
     end
 
@@ -37,20 +37,20 @@ describe TankRemote do
 
   describe "#instruct_to_move" do
     it 'should move the jellyfish 1 co-ordinate across' do
-      remote.place(jellyfish,fish_tank)
+      remote.place(jellyfish)
       remote.set_coords(jellyfish,3,3,"N")
-      remote.instruct_to_move(remote,"FRF",jellyfish,mover)
+      remote.instruct_to_move("FRF",jellyfish,mover)
       expect(jellyfish.tank_position).to eq([4,4])
     end
 
     it 'should raise an error if fish is not in the tank' do
-      expect{remote.instruct_to_move(remote,"FRFRLF",jellyfish,mover)}.to raise_error "Fish is currently not in the tank"
+      expect{remote.instruct_to_move("FRFRLF",jellyfish,mover)}.to raise_error "Fish is currently not in the tank"
     end
 
     it 'should remove the jellyfish from the tank if it goes beyond the boundaries' do
-      remote.place(jellyfish,fish_tank)
+      remote.place(jellyfish)
       remote.set_coords(jellyfish,2,2,"N")
-      remote.instruct_to_move(remote,"FFFF",jellyfish,mover)
+      remote.instruct_to_move("FFFF",jellyfish,mover)
       expect(fish_tank.fish).not_to include(jellyfish)
     end
   end

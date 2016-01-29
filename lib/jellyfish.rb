@@ -30,10 +30,10 @@ class JellyFish
     @tank_position = [@x,@y]
   end
 
-  def turn(remote,direction)
-    if direction == "R"
+  def turn(remote)
+    if @direction == "R"
       @facing = remote.turn_jellyfish_clockwise(self)
-    elsif direction =="L"
+    elsif @direction =="L"
       @facing = remote.turn_jellyfish_anti_clockwise(self)
     end
   end
@@ -52,13 +52,9 @@ class JellyFish
     tank.tank_points.include? [@x,@y]
   end
 
-  def record_journey_history
-    @journey_history << [@x,@y]
-  end
-
   def take_direction_and_send_to_turn_method(remote)
     if @direction == "R" || @direction == "L"
-      self.turn(remote,@direction)
+      self.turn(remote)
     end
   end
 
@@ -93,9 +89,9 @@ tank = Tank.new
 remote = TankRemote.new(tank)
 reporter = JellyFishReporter.new
 mover = JellyFishMover.new
-remote.place(fish,tank)
+remote.place(fish)
 remote.set_coords(fish,1,1,"N")
-remote.instruct_to_move(remote,"FF",fish,mover)
+remote.instruct_to_move("FF",fish,mover)
 print fish.output(reporter)
 
 # print fish.output(reporter)
