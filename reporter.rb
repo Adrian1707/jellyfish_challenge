@@ -52,8 +52,7 @@ end
 set_up
 puts "input processing"
 puts "-"*20
-print @input
-puts "\n"
+print "#{@input}\n"
 puts "output"
 puts "-"*20
 print_output

@@ -22,7 +22,7 @@ class JellyFish
       call_move_methods(remote,tank,instructions,mover)
       set_to_lost_if_outside_tank(tank)
     end
-    @tank_position = [@x,@y]
+    set_new_tank_position
   end
 
   def turn(remote)
@@ -66,5 +66,9 @@ class JellyFish
   def no_go_zone(tank)
     tank.restricted_zones << @journey_history[-1] unless contains_no_go_zone?(tank)
   end
+
+  def set_new_tank_position
+    @tank_position = [@x,@y]
+  end 
 
 end

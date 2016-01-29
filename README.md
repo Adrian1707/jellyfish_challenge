@@ -3,27 +3,35 @@
 
 # jellyfish-challenge
 
-The Jellyfish tank can be modelled by a rectangular grid around which Jellyfish are able to move according to instructions provided from the Tank IR Remote Control. You are to write a program that determines each sequence of Jellyfish positions and reports the final position of the Jellyfish. A Jellyfish position consists of a grid coordinate (a pair of integers: x-coordinate followed by y-coordinate) and an orientation (N, S, E, W for north, south, east, and west).
+My approach to this challenge was to create a set of interacting classes that allow a jellyfish to be moved by a remote in a tank.
+Instantly I knew I'd have to write 3 classes, each with their own responsibility. The tank to hold the jellyfish, the remote to control the jellyfish, and the jellyfish itself.
 
-A Jellyfish instruction is a string of the letters “L”, “R”, and “F” which represent, respectively, the instructions:
+I made it a habit of interrogating my classes and their methods regularly, asking them each time what their responsibility was. If I asked a method and its answer contained an 'and', I often refactored. If you look through my commit history some of the methods started out as monsters (the jellyfish 'move' method). A bulk of my time was spent refactoring in order to follow the Single Responsibility Principle.
 
- - Left : the jellyfish turns left 90 degrees and remains on the current grid point.
- - Right : the jellyfish turns right 90 degrees and remains on the current grid point.
- -Forward : the jellyfish moves forward one grid point in the direction of the current orientation and maintains the same orientation.
+I also used dependency injection throughout this task, and no class currently depends on another class. Every time a class needs to
+interact with another it's done though dependency injection.
 
-The direction North corresponds to the direction from grid point (x, y) to grid point (x, y+1). There is also a possibility that additional command types may be required in the future and provision should be made for this.
+My main regret during this challenge was the absence of doubles and mocks in my spec files. I initially tested using doubles, then found my tests were failing, but my code was working when I ran manual feature tests in the console. I then decided to reference the classes
+themselves and planned to introduce doubles/mocks towards the end. Given I wanted to get this in my the end of the week I ran out of time.
 
-Since the grid is rectangular and bounded (...yes the Jellyfish tank is a very flat tank), a jellyfish that moves “off” the edge of the grid is lost forever. However, lost jellyfish leave a jellyfish “scent” that prohibits future jellyfish from dropping off the tank at the same grid point. The scent is left at the last grid position the jellyfish occupied before disappearing over the edge. An instruction to move “off” the tank from a grid point from which a jellyfish has been previously lost is simply ignored by the current jellyfish.
+I continued refactoring my Jellyfish class and split it out to a mover class and a reporter class (it's not the responsibility of the jellyfish to report it's current location). Spec files were not made for these classes as they were already tested via the initial jellyfish class.
 
-## The Input
+Overall I enjoyed this challenge as I learnt new things and found my mind being stretched. On looking at the task initially I was intimidated, but after careful planning I realised what I needed to do. I also realised my ability to isolate problems and narrow them down in order to arrive at solutions faster has improved immensely.
 
-The first line of input is the upper-right coordinates of the rectangular tank, the lower-left coordinates are assumed to be 0, 0. The remaining input consists of a sequence of jellyfish positions and instructions (two lines per jellyfish). A position consists of two integers specifying the initial coordinates of the jellyfish and an orientation (N, S, E, W), all separated by whitespace on one line. A jellyfish instruction is a string of the letters “L”, “R”, and “F” on one line.
+## Install
 
-Each jellyfish is processed sequentially, i.e., finishes executing the jellyfish instructions before the next jellyfish begins execution. The maximum value for any coordinate is 50. All instruction strings will be less than 100 characters in length.
+```
+git clone https://github.com/Adrian1707/jellyfish-challenge
+cd jellyfish-challenge
+ruby reporter.rb
+```
 
-##The Output
-For each jellyfish position/instruction in the input, the output should indicate the final grid position and orientation of the jellyfish. If a jellyfish falls off the edge of the grid the word “LOST” should be printed after the position and orientation.
+## Run Them Tests
 
+```
+bundle
+rspec
+```
 ## Sample
 
 *Input*
@@ -40,13 +48,3 @@ For each jellyfish position/instruction in the input, the output should indicate
 33NLOST
 23S
 ```
-
-## Guidelines :book:
-
-For submissions:
-
-- Fork this repository and submit your solution in a pull request with clear installation and execution instructions, don't forget to notify a [Jon](https://github.com/bringmebeer) once you've submitted.
-- Test-driven-development is expected.
-- We'd like to see [OOP principles](https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)) applied to your implementation, unless you're language of choice makes use of a different programming paradigm.
-- There's no official time limit for this test unless previously agreed. Don't be afraid to submit even if you didn't manage to finish! We will review the work that was done :)
-
