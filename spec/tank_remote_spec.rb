@@ -41,6 +41,7 @@ describe TankRemote do
       remote.set_coords(jellyfish,3,3,"N")
       remote.instruct_to_move("FRF",jellyfish,mover)
       expect(jellyfish.tank_position).to eq([4,4])
+      expect(jellyfish.facing).to eq("E")
     end
 
     it 'should raise an error if fish is not in the tank' do

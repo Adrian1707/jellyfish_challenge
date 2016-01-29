@@ -75,16 +75,16 @@ class JellyFish
 end
 
 
-fish = JellyFish.new
-fish2 = JellyFish.new
-tank = Tank.new
-remote = TankRemote.new(tank)
-reporter = JellyFishReporter.new
-mover = JellyFishMover.new
-remote.place(fish)
-remote.set_coords(fish,1,1,"N")
-remote.instruct_to_move("FF",fish,mover)
-print reporter.output(fish)
+# fish = JellyFish.new
+# fish2 = JellyFish.new
+# tank = Tank.new(5,3)
+# remote = TankRemote.new(tank)
+# reporter = JellyFishReporter.new
+# mover = JellyFishMover.new
+# remote.place(fish)
+# remote.set_coords(fish,1,1,"N")
+# remote.instruct_to_move("FFFFFLL",fish,mover)
+# print reporter.output(fish)
 # print fish.tank_position
 
 # print fish.output(reporter)
