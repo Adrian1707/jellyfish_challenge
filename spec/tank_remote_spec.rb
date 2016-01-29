@@ -1,7 +1,5 @@
-require 'tank_remote'
-require 'jellyfish'
-require 'tank'
-require 'jellyfish_mover'
+require 'spec_helper'
+
 describe TankRemote do
 
   let(:remote) {described_class.new(fish_tank)}

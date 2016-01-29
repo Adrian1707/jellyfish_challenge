@@ -1,5 +1,4 @@
-require 'tank'
-require 'jellyfish_mover'
+require 'spec_helper'
 
 describe Tank do
 

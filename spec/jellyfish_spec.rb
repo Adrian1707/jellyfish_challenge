@@ -1,4 +1,4 @@
-require 'jellyfish'
+require 'spec_helper'
 
 describe JellyFish do
 

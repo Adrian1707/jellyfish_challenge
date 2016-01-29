@@ -1,8 +1,3 @@
-require_relative 'tank_remote'
-require_relative 'tank'
-require_relative 'jellyfish_reporter'
-require_relative 'jellyfish_mover'
-
 class JellyFish
 
   attr_reader :size, :tank_position, :facing, :lost, :journey_history, :direction
@@ -73,29 +68,3 @@ class JellyFish
   end
 
 end
-
-
-# fish = JellyFish.new
-# fish2 = JellyFish.new
-# tank = Tank.new(5,3)
-# remote = TankRemote.new(tank)
-# reporter = JellyFishReporter.new
-# mover = JellyFishMover.new
-# remote.place(fish)
-# remote.set_coords(fish,1,1,"N")
-# remote.instruct_to_move("FFFFFLL",fish,mover)
-# print reporter.output(fish)
-# print fish.tank_position
-
-# print fish.output(reporter)
-# fish2.position(1,1,"N")
-# fish2.move(remote,tank,"FFFFFFFFFLLFL")
-# print fish2.output(reporter)
-# print tank.restricted_zones
-# fish.position(1,1,"N")
-# fish.move(tank,"FFF")
-# fish2.position(1,1,"N")
-# fish2.move(tank,"FFF")
-# # print fish.journey_history
-# print fish.output
-# print fish2.output
