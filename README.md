@@ -3,6 +3,8 @@
 
 # jellyfish-challenge
 
+The aim of this challenge is to take the input from a file, and process it to place the output on the command line. The input is a set of instructions for a jellyfish on where to move in a tank, and the output is it's new position. 
+
 My approach to this challenge was to create a set of interacting classes that allow a jellyfish to be moved by a remote in a tank.
 Instantly I knew I'd have to write 3 classes, each with their own responsibility. The tank to hold the jellyfish, the remote to control the jellyfish, and the jellyfish itself.
 
@@ -15,8 +17,6 @@ My main regret during this challenge was the absence of doubles and mocks in my 
 themselves and planned to introduce doubles/mocks towards the end. Given I wanted to get this in by the end of the week I ran out of time.
 
 I continued refactoring my Jellyfish class and split it out to a mover class and a reporter class (it's not the responsibility of the jellyfish to report it's current location). Spec files were not made for these classes as they were already tested via the initial jellyfish class.
-
-Overall I enjoyed this challenge as I learnt new things and found my mind being stretched. On looking at the task initially I was intimidated, but after careful planning I realised what I needed to do. I also realised my ability to isolate problems and narrow them down in order to arrive at solutions faster has improved immensely.
 
 ## Install
 

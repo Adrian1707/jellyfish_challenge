@@ -28,7 +28,7 @@ class JellyFishMover
     end
   end
 
-  private 
+  private
 
   def record_journey_history(jellyfish)
     jellyfish.journey_history << [jellyfish.x,jellyfish.y]
